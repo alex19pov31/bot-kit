@@ -1,6 +1,6 @@
 # Bot kit
 
-Создание общего контекста без кнофигурационного файла:
+#### Создание общего контекста без кнофигурационного файла:
 
 ```python
 from bot_kit.kit import BotContext
@@ -15,7 +15,7 @@ bot_context = BotContext(token)
 bot_context.set_db_manager(db_manager)
 ```
 
-Создание общего контекста через конфигурационный файл:
+#### Создание общего контекста через конфигурационный файл:
 
 ```python
 from bot_kit.kit import BotContext
@@ -27,7 +27,12 @@ config = ConfigBot(INIConfig('settings.ini'))
 bot_context = BotContext.init_form_config(config, BaseModel)
 ```
 
-Создание простого меню:
+#### Создание простого меню:
+
+Меню создается как класс на основе MenuReplyKeyboard и может быть зарегистрировано
+через декоратор register_menu. При регистрации контекст для работы с ботом пробрасывается
+в команды завязанные на кнопки меню. Правила для показа меню моно указать в декораторе, по такому же принципу
+как и в aiogram или же определить метод check.
 
 ```python
 from bot_kit.kit import BotCommand, MenuReplyKeyboard, ReplyKeyboardButton, ShowMenuButton
@@ -42,7 +47,7 @@ class FirstCommand(BotCommand):
         self.bot - объект бота
         """
         user_manager: ModelManager = self.db_manager.manage(UserModel)
-        current_user: UserModel = user_manager.one(chat_id=tg_object.from_user.id)
+        user_manager.one(chat_id=tg_object.from_user.id)
         await tg_object.answer('first command is finished')
 
 
@@ -79,7 +84,10 @@ class MainMenu(MenuReplyKeyboard):
             ))
 ```
 
-Создание Inline меню:
+#### Создание Inline меню:
+
+Inline меню создается по такому же принципу что и основное меню, но родителем в данном случае выступает
+класс MenuInlineKeyboard.
 
 ```python
 from bot_kit.kit import BotCommand, MenuInlineKeyboard, InlineButton
@@ -100,7 +108,10 @@ class ContextMenu(MenuInlineKeyboard):
         return True
 ```
 
-Создание фоновой задачи выполняемой через определенный интервал:
+#### Создание фоновой задачи выполняемой через определенный интервал:
+
+Периодические задачи можно оформлять как классы-наследники BotTask в этом случае внутри класса будет доступен
+кнотекст бота. Или же как обычные функции завернутые в декоратор register_async_timer
 
 ```python
 
@@ -122,8 +133,10 @@ class SimpleTask(BotTask):
 bot_context.add_task(SimpleTask(), 600) # запуск задачи раз в 10 минут
 ```
 
-Запуск бота:
+#### Запуск бота:
+
+На текущий момент бота можно запускать только в режиме long polling.
 
 ```python
-bot_context.start_polling() # на текущий момент работает только через long pooling
+bot_context.start_polling()
 ```
