@@ -130,7 +130,8 @@ class INIConfig(BaseConfig):
         self.config.read(self.config_path)
 
     def save(self):
-        self.config.write(self.config_path)
+        with open(self.config_path, 'w') as configfile:
+            self.config.write(configfile)
 
     def set_param(self, key: str, value, section: str = ''):
         if section == '':
@@ -195,3 +196,16 @@ class ConfigBot:
 
 class BotException(Exception):
     pass
+
+
+def init_config():
+    config = ConfigParser()
+    config.set('default', 'token', '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11')
+    config.set('default', 'db', 'sqlite:///bot.db')
+    config.set('default', 'use_logging', 1)
+    config.set('default_logging', 'path', 'bot.log')
+    config.set('default_logging', 'level', 20)
+    config.set('default_logging', 'format', '%(asctime)s	%(levelname)s	%(message)s')
+
+    with open('settings.ini', 'w') as configfile:
+        config.write(configfile)

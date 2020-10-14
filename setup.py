@@ -14,4 +14,9 @@ setup(
     license="MIT",
     install_requires=install_requires,
     python_requires='>=3.6',
+    entry_points={
+        'console_scripts': [
+            'config = bot_kit.common:init_config'
+        ]
+    }
 )
