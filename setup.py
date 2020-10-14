@@ -7,7 +7,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="bot_kit",
-    version=proxy_client.__version__,
+    version=bot_kit.__version__,
     packages=find_packages(),
     author="Alexander Nesterov",
     author_email="alex19pov31@gmail.com",
