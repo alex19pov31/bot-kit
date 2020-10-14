@@ -317,7 +317,6 @@ class BotContext(BaseBotContext):
 
         logging_config = config.get_logging()
         if not logging_config.is_empty():
-            print(logging_config.get_format())
             logging.basicConfig(
                 filename=logging_config.get_path(),
                 filemode='w',
