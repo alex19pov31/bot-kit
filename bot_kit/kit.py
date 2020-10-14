@@ -51,7 +51,7 @@ class BotTask(ABC):
         await self.execute(*args, **kwargs)
 
 
-class BotCommand(ABC, Registrator):
+class BotCommand(Registrator):
     def __init__(self):
         self.bc: BaseBotContext = None
         self.bot: Bot = None
