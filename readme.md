@@ -27,6 +27,14 @@ config = ConfigBot(INIConfig('settings.ini'))
 bot_context = BotContext.init_form_config(config, BaseModel)
 ```
 
+#### Генерация конфигурационного файла
+
+Для генерации конфигурационного файла необходимо выполнить команду:
+
+```bash
+python3 -m bot_kit config --filename=myconfig.ini
+```
+
 #### Создание простого меню:
 
 Меню создается как класс на основе MenuReplyKeyboard и может быть зарегистрировано
